@@ -1,4 +1,6 @@
-MODULE
+TITLE = 'Tutorial Framework'
+ABOUT = 'interactive tutorial system based on tiny learning modules'
+GITHUB = 'https://github.com/ponyatov/tuty'
 
-.inc symcore/symcore.bI
+.inc ../dos/lexfiles.do
 

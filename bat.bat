@@ -1,2 +1,2 @@
 @start .
-@gvim -p tuty.bI tuty.blog ypp.ypp lpp.lpp hpp.hpp cpp.cpp win32.hpp win32.cpp Makefile bat.bat
+@gvim -p tuty.bI tuty.blog ../dos/ypp.ypp ../dos/lpp.lpp ../dos/hpp.hpp ../dos/cpp.cpp ../dos/win32.hpp ../dos/win32.cpp Makefile bat.bat

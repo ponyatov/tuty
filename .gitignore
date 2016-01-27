@@ -1,7 +1,8 @@
 *~
 *.swp
 *.exe
-*.log
+*.*log
 ypp.tab.?pp
 lex.yy.c
 res.res
+tuty/

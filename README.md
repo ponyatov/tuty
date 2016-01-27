@@ -7,4 +7,4 @@ license: http://www.gnu.org/copyleft/lesser.html
 
 GitHub: https://github.com/ponyatov/tuty
 
-### ![logo]((https://github.com/ponyatov/icons/raw/master/logo64x64.png)) powered by bI
+### ![logo](https://github.com/ponyatov/icons/raw/master/logo64x64.png) powered by bI

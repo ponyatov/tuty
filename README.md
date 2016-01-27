@@ -1,5 +1,5 @@
 # ![logo](https://github.com/ponyatov/icons/raw/master/Rubik_64x64.png) tuty : Tutorial Framework
-### interactive tutorial system based on tiny learning modules
+### Interactive tutorial system based on tiny learning modules
 
 (c) Dmitry Ponyatov <dponyatov@gmail.com>, all rights reserved
 

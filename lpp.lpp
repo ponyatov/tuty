@@ -1,0 +1,24 @@
+%{
+#include "hpp.hpp"
+string LexString;											/* string buffer */
+void incLude(Sym*inc) {										// .inc processing
+	if (!(yyin = fopen(inc->val.c_str(),"r"))) yyerror("");	// open
+	yypush_buffer_state(yy_create_buffer(yyin,YY_BUF_SIZE));// push to lexer
+}
+%}
+%option noyywrap
+%option yylineno
+%%
+#[^\n]*			{}											/* line comment */
+^\.inc[^\n]*	{incLude(new Directive(yytext));}			/* .include */
+
+[a-zA-Z0-9_]+	TOC(Sym,SYM)								/* symbol */
+
+\:				TOC(Op,COLON)
+
+[ \t\r\n]+		{}
+.				{}
+<<EOF>>			{ yypop_buffer_state();		/* end of .inluded file */
+				if (!YY_CURRENT_BUFFER) yyterminate();}
+%%
+

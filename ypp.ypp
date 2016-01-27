@@ -1,0 +1,14 @@
+%{
+#include "hpp.hpp"
+%}
+%defines %union { Sym*o; }
+%token <o> SYM
+%token <o> COLON
+%type <o> scalar ex
+%%
+REPL : | REPL ex { W($2); W("\n------"); W($2->eval()); W("\n=======\n"); } ;
+scalar : SYM ;
+ex : scalar
+	| ex COLON ex	{ $$=$2; $$->push($1); $$->push($3); }
+;
+%%

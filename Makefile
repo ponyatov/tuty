@@ -5,8 +5,8 @@ MODULE = $(notdir $(CURDIR))
 .PHONY: exec
 exec: ./exe.exe $(SRC)
 	./exe.exe < $(MODULE).bI > $(MODULE).blog && tail $(TAIL) $(MODULE).blog
-C = cpp.cpp ypp.tab.cpp lex.yy.c
-H = hpp.hpp ypp.tab.hpp
+C = cpp.cpp $(OS).cpp ypp.tab.cpp lex.yy.c
+H = hpp.hpp $(OS).hpp ypp.tab.hpp
 CXXFLAGS += -I. -std=gnu++11 -DMODULE=\"$(MODULE)\" -DOS=\"$(OS)\"
 ./exe.exe: $(C) $(H) $(RES) Makefile
 	$(CXX) $(CXXFLAGS) -o $@ $(C) $(RES)

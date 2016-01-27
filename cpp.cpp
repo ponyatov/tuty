@@ -11,13 +11,29 @@ void Sym::push(Sym*o)			{ nest.push_back(o); }
 void W(Sym*o) { cout << o->dump(); }
 void W(string s) { cout << s; }
 
-string Sym::tagval()	{ return "<"+tag+":"+val+">"; }
-string Sym::pad(int n)	{ string S; for (int i=0;i<n;i++) S+="\t"; return S; }
-string Sym::dump(int depth) {
-	string S = "\n"+pad(depth)+tagval();
+string Sym::tagval() { return "<"+tag+":"+val+">"; }	// <T:V> header string
+string Sym::dump(int depth) {							// dump as text
+	string S = "\n" + pad(depth) + tagval();
+//	for (auto pr=par.begin(),e=par.end();pr!=e;pr++)	// par{}ameters
+//		S += ","+pr->first+":"+pr->second->tagval();
+	for (auto it=nest.begin(),e=nest.end();it!=e;it++)	// nest[]ed
+		S += (*it)->dump(depth+1);
+	return S; }
+string Sym::pad(int n) {								// pad as tree
+	string S;
+	for(int i=0;i<n-1;i++) S+="|   ";
+	if (n) S+="\\___";
 	return S; }
 
-Sym* Sym::eval() { Sym*E = env[val]; if (E) return E; else return this; }
+Sym* Sym::eval() {
+	Sym*E = env[val]; if (E) return E;					// env[] lookup
+	for (auto it=nest.begin(),e=nest.end();it!=e;it++)	// nest[]ed
+		(*it) = (*it)->eval();
+	return this; }
+
+Sym* Sym::str() 	{ return new Str(val); }
+Sym* Sym::eq(Sym*o)	{ env[val]=o; return o; }
+Sym* Sym::at(Sym*o)	{ push(o); return this; }
 
 														// == directive ==
 Directive::Directive(string V):Sym("",V) {
@@ -27,14 +43,35 @@ Directive::Directive(string V):Sym("",V) {
 		               val.erase(0,1); }
 }
 
+														// == scalars ==
+Str::Str(string V):Sym("str",V) {}
+
+														// == composites ==
+List::List():Sym("[","]") {}
+
 														// == functionals ==
 Op::Op(string V):Sym("op",V) {}							// operator
+Sym* Op::eval() {
+	if (val=="=") { assert(nest.size()==2); return nest[0]->eq(nest[1]); }
+	Sym::eval();
+	if (nest.size()==2) {
+		if (val=="@") return nest[0]->at(nest[1]);
+	}
+	return this;
+}
 
+Fn::Fn(string V,FN F):Sym("fn",V)	{ fn=F; }
+Sym* Fn::at(Sym*o)					{ return fn(o); }
+
+														// == fileio ==
+Sym* dir(Sym*o) { return new Dir(o); }
 
 map<string,Sym*> env;
 void env_init() {
 	// ---- metainformation ----
 	env["MODULE"]	=new Sym(MODULE);
 	env["OS"]		=new Sym(OS);
+	// -- fileio --
+	env["dir"]		=new Fn("dir",dir);
 }
 

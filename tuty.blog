@@ -4,7 +4,52 @@
 <sym:tuty>
 =======
 
+<op:=>
+\___<sym:next>
+\___<op:@>
+|   \___<sym:dir>
+|   \___<str:next>
+------
+<op:@>
+\___<sym:dir>
+\___<str:next>
+=======
+
+<op:=>
+\___<sym:files>
+\___<[:]>
+|   \___<op:=>
+|   |   \___<sym:readme>
+|   |   \___<op:+>
+|   |   |   \___<sym:dir>
+|   |   |   \___<sym:file>
+|   \___<str:README.md>
+------
+<[:]>
+\___<op:=>
+|   \___<sym:readme>
+|   \___<op:+>
+|   |   \___<sym:dir>
+|   |   \___<sym:file>
+\___<str:README.md>
+=======
+
+<sym:files>
+------
+<[:]>
+\___<op:=>
+|   \___<sym:readme>
+|   \___<op:+>
+|   |   \___<sym:dir>
+|   |   \___<sym:file>
+\___<str:README.md>
+=======
+
 <op::>
+\___<sym:class>
+\___<sym:Sym>
 ------
 <op::>
+\___<sym:class>
+\___<sym:Sym>
 =======
